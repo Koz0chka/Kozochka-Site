@@ -9,6 +9,47 @@ const gallery = document.getElementById('gallery');
 
 let currentIndex = 0;
 let imageData = [];
+let currentFilter = 'all';
+
+function renderFilters() {
+    const filtersContainer = document.getElementById('filters');
+    filtersContainer.innerHTML = '';
+
+    const allCharacters = new Set();
+    imageData.forEach(item => {
+        if (item.characters && Array.isArray(item.characters)) {
+            item.characters.forEach(char => allCharacters.add(char));
+        }
+    });
+
+    const btnAll = document.createElement('button');
+    btnAll.className = 'filter-btn active';
+    btnAll.textContent = 'All';
+    btnAll.dataset.filter = 'all';
+    btnAll.addEventListener('click', () => handleFilterClick('all'));
+    filtersContainer.appendChild(btnAll);
+
+    allCharacters.forEach(char => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.textContent = char;
+        btn.dataset.filter = char;
+        btn.addEventListener('click', () => handleFilterClick(char));
+        filtersContainer.appendChild(btn);
+    });
+}
+
+function handleFilterClick(filterValue) {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.filter === filterValue) {
+            btn.classList.add('active');
+        }
+    });
+
+    currentFilter = filterValue;
+    renderGallery();
+}
 
 async function loadGalleryData() {
     try {
@@ -27,14 +68,24 @@ async function loadGalleryData() {
 function renderGallery() {
     gallery.innerHTML = '';
 
+    let filteredData = imageData;
+
+    if (currentFilter !== 'all') {
+        filteredData = imageData.filter(item => {
+            return item.characters && item.characters.includes(currentFilter);
+        });
+    }
+
     const groupedByAuthor = {};
-    
-    imageData.forEach((item, index) => {
+
+    filteredData.forEach((item, index) => {
+        const originalIndex = imageData.findIndex(orig => orig.image === item.image);
+        
         const authorKey = item.authorName;
         if (!groupedByAuthor[authorKey]) {
             groupedByAuthor[authorKey] = [];
         }
-        groupedByAuthor[authorKey].push({...item, originalIndex: index});
+        groupedByAuthor[authorKey].push({...item, originalIndex: originalIndex});
     });
 
     Object.values(groupedByAuthor).forEach(authorImages => {
@@ -93,6 +144,20 @@ function renderGallery() {
     });
 }
 
+async function loadGalleryData() {
+    try {
+        const response = await fetch('data.json');
+        if (!response.ok) throw new Error('Ошибка загрузки данных');
+        imageData = await response.json();
+        
+        renderFilters();
+        renderGallery();
+    } catch (error) {
+        console.error('Ошибка:', error);
+        gallery.innerHTML = '<p class="error">Ошибка загрузки галереи</p>';
+    }
+}
+
 function openModal(src, alt) {
     modal.style.display = "block";
     loading.style.display = "block";
@@ -113,11 +178,18 @@ function openModal(src, alt) {
 }
 
 function updateCaption() {
-    const currentImage = imageData[currentIndex]; // ${currentImage.alt} | 
+    const currentImage = imageData[currentIndex];
+
+    let charsHtml = '';
+    if (currentImage.characters && currentImage.characters.length > 0) {
+        const charsString = currentImage.characters.join(', '); 
+        charsHtml = `<div class="modal-chars">Characters: ${charsString}</div>`;
+    }
+
     modalCaption.innerHTML = `
         Author: <a href="${currentImage.authorUrl}" target="_blank">${currentImage.authorName}</a> | 
-        Source: <a href="${currentImage.sourceUrl}" target="_blank">${currentImage.sourceName}</a> | 
-        Character: ${currentImage.character}
+        Source: <a href="${currentImage.sourceUrl}" target="_blank">${currentImage.sourceName}</a> 
+        ${charsHtml}
     `;
 }
 

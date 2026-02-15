@@ -237,6 +237,38 @@ a:focus, button:focus {
     z-index: 1;
 }
 
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8em;
+    padding: 0 1.5em 1.5em 1.5em;
+    margin-bottom: 1em;
+}
+
+.filter-btn {
+    background-color: rgba(160, 0, 147, 0.133);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.6em 1.2em;
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: rgba(160, 0, 147, 0.3);
+}
+
+.filter-btn.active {
+    background-color: rgba(160, 0, 147, 0.8);
+    border-color: rgba(255, 255, 255, 0.4);
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
 @media (max-width: 359px) {
     .grid { column-count: 1; }
     body { margin: 0.5rem; }
