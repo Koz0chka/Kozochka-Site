@@ -10,42 +10,37 @@ h1 {
 }
 
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    grid-gap: 1.5em;
+    column-count: 4;
+    column-gap: 1.5em;
     padding: 1.5em;
-    border-radius: 20px;
-    background-color: rgba(160, 0, 147, 0.2);
     margin: 0 auto;
 }
 
 .panel {
+    break-inside: avoid; 
+    margin-bottom: 1.5em;
     background-color: rgba(160, 0, 147, 0.133);
-    padding: 1.5em;
+    padding: 0.6em;
     border-radius: 20px;
-    transition: all 0.3s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 1.5em;
+    gap: 1em;
 }
 
 .panel:hover {
-    transform: translateY(-5px);
+    /* transform: translateY(-5px); */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     background-color: rgba(160, 0, 147, 0.2);
 }
 
 .image-container {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     gap: 1em;
     border-radius: 18px;
-    padding: 1.2em;
+    padding: 0.6em;
     background: rgb(220, 53, 150);
-    width: 100%;
-    height: fit-content;
 }
 
 .image-container a {
@@ -57,14 +52,12 @@ h1 {
 
 .panel img {
     width: 100%;
-    max-width: 100%;
+    max-height: none;
     height: auto;
-    border: 3px solid rgba(255, 255, 255, 0.3);
     border-radius: 12px;
     object-fit: cover;
     transition: transform 0.3s ease;
     cursor: pointer;
-    /* object-position: top; */
 }
 
 .panel img:hover {
@@ -220,92 +213,104 @@ a:focus, button:focus {
     background: rgba(160, 0, 147, 0.9);
 }
 
-@keyframes zoomIn {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+@media (max-width: 359px) {
+    .grid { column-count: 1; }
+    body { margin: 0.5rem; }
+    h1 { font-size: 1.4rem; }
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-@media (max-width: 768px) {
-    .modal-content {
-        max-width: 95%;
-        max-height: 80%;
-    }
-    
-    .close {
-        top: 10px;
-        right: 15px;
-        font-size: 30px;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .prev, .next {
-        font-size: 30px;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .modal-caption {
+@media (min-width: 360px) {
+    body {
+        margin: 1%;
         font-size: 0.9rem;
-        padding: 8px;
     }
-}
-
-@media (max-height: 600px) {
-    .modal-content {
-        max-height: 80%;
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .grid {
+        column-count: 2;
+        padding: 0.8em;
+        column-gap: 0.8em;
+    }
+    
+    .panel {
+        padding: 1em;
     }
 }
 
 @media (min-width: 768px) {
+    body {
+        margin: 2%;
+        font-size: 0.95rem;
+    }
+    
+    h1 {
+        font-size: 2.2rem;
+    }
+    
     .grid {
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        column-count: 2;
+        padding: 1em;
+        column-gap: 1em;
+    }
+    
+    .panel {
+        padding: 1.2em;
+        margin-bottom: 1em;
     }
     
     .panel img {
-        max-height: 300px;
+        max-height: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        margin: 3%;
+        font-size: 1rem;
+    }
+    
+    .grid {
+        column-count: 3;
+        padding: 1.2em;
+        column-gap: 1.2em;
+    }
+    
+    .panel {
+        padding: 1.2em;
+    }
+    
+    .image-container {
+        padding: 1em;
     }
 }
 
 @media (min-width: 1200px) {
     .grid {
-        grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+        column-count: 3;
+        column-gap: 1.5em;
     }
     
-    .panel img {
-        max-height: 350px;
+    .panel {
+        margin-bottom: 1.5em;
     }
 }
 
 @media (min-width: 1600px) {
     .grid {
-        grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        column-count: 4;
         max-width: 1600px;
         margin: 0 auto;
-    }
-    
-    .panel img {
-        max-height: 400px;
     }
 }
 
 @media (min-width: 2560px) {
     .grid {
-        grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+        column-count: 5;
         max-width: 2000px;
-    }
-    
-    .panel img {
-        max-height: 500px;
+        column-gap: 2em;
     }
     
     h1 {
@@ -318,139 +323,17 @@ a:focus, button:focus {
     }
 }
 
-@media (max-width: 1024px) {
-    body {
-        margin: 3%;
-        font-size: 1rem;
+@media (max-height: 600px) {
+    .modal-content {
+        max-height: 80%;
     }
-    
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-        padding: 1.2em;
-        grid-gap: 1.2em;
-    }
-    
-    .panel {
-        padding: 1.2em;
-    }
-    
-    .image-container {
-        padding: 1em;
-    }
-    
-    .panel img {
-        max-height: 280px;
-    }
-}
 
-@media (max-width: 768px) {
-    body {
-        margin: 2%;
-        font-size: 0.95rem;
-    }
-    
-    h1 {
-        font-size: 2.2rem;
-        margin: 1rem 0;
-    }
-    
     .grid {
-        grid-template-columns: 1fr;
-        padding: 1em;
-        grid-gap: 1em;
-        border-radius: 15px;
-    }
-    
-    .panel {
-        padding: 1.2em;
-        border-radius: 15px;
-    }
-    
-    .image-container {
-        width: 100%;
-        padding: 1em;
+        column-count: 2;
     }
     
     .panel img {
-        max-height: 250px;
-    }
-    
-    .author, .source {
-        margin: 0.5em 0;
-        text-align: center;
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    body {
-        margin: 1%;
-        font-size: 0.9rem;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-    }
-    
-    .grid {
-        padding: 0.8em;
-        grid-gap: 0.8em;
-    }
-    
-    .panel {
-        padding: 1em;
-    }
-    
-    .image-container {
-        padding: 0.8em;
-    }
-    
-    .panel img {
-        max-height: 200px;
-        border-width: 2px;
-    }
-    
-    .author, .source {
-        padding: 0.7em;
-        font-size: 0.85em;
-    }
-}
-
-@media (max-width: 360px) {
-    body {
-        font-size: 0.85rem;
-        margin: 0.5rem;
-    }
-    
-    h1 {
-        font-size: 1.6rem;
-    }
-    
-    .grid {
-        padding: 0.6em;
-        grid-gap: 0.6em;
-    }
-    
-    .panel {
-        padding: 0.8em;
-    }
-    
-    .image-container {
-        padding: 0.7em;
-    }
-    
-    .panel img {
-        max-height: 180px;
-    }
-}
-
-@media (max-height: 600px) and (orientation: landscape) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    }
-    
-    .panel img {
-        max-height: 150px;
+        max-height: 250px; 
     }
 }
 
@@ -469,4 +352,14 @@ body {
   color: rgb(255, 255, 255);
   overflow-x: hidden;
   line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
