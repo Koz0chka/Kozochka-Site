@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kozochka</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Kozochka</h1>
+    
+    <div id="gallery" class="grid"></div>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="controls">
+            <div class="prev">❮</div>
+            <div class="next">❯</div>
+        </div>
+        <div class="loading">Загрузка...</div>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
