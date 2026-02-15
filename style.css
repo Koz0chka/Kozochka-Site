@@ -217,6 +217,7 @@ a:focus, button:focus {
     position: relative;
     width: 100%;
     line-height: 0;
+    container-type: inline-size;
 }
 
 .ai-badge {
@@ -224,13 +225,14 @@ a:focus, button:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: clamp(4rem, 15vw, 100rem);
+    font-size: 60cqw; 
     font-weight: 1000;
     color: white;
-    opacity: 0.2;
+    opacity: 0.32;
     background: none;
     pointer-events: none; 
     user-select: none;
+    white-space: nowrap;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
