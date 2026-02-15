@@ -48,15 +48,29 @@ function renderGallery() {
         infoContainer.className = 'info-container';
 
         authorImages.forEach(imgData => {
+            const imgWrapper = document.createElement('div');
+            imgWrapper.className = 'img-wrapper';
+
             const img = document.createElement('img');
             img.src = imgData.image;
             img.alt = imgData.alt;
             img.dataset.index = imgData.originalIndex;
+
             img.addEventListener('click', function() {
                 currentIndex = parseInt(this.dataset.index);
                 openModal(this.src, imgData.alt);
             });
-            imageContainer.appendChild(img);
+
+            imgWrapper.appendChild(img);
+
+            if (imgData.ai) {
+                const badge = document.createElement('div');
+                badge.className = 'ai-badge';
+                badge.textContent = 'AI';
+                imgWrapper.appendChild(badge);
+            }
+
+            imageContainer.appendChild(imgWrapper);
         });
 
         const firstImage = authorImages[0];
@@ -101,8 +115,9 @@ function openModal(src, alt) {
 function updateCaption() {
     const currentImage = imageData[currentIndex]; // ${currentImage.alt} | 
     modalCaption.innerHTML = `
-        Автор: <a href="${currentImage.authorUrl}" target="_blank">${currentImage.authorName}</a> | 
-        Источник: <a href="${currentImage.sourceUrl}" target="_blank">${currentImage.sourceName}</a>
+        Author: <a href="${currentImage.authorUrl}" target="_blank">${currentImage.authorName}</a> | 
+        Source: <a href="${currentImage.sourceUrl}" target="_blank">${currentImage.sourceName}</a> | 
+        Character: ${currentImage.character}
     `;
 }
 

@@ -213,6 +213,28 @@ a:focus, button:focus {
     background: rgba(160, 0, 147, 0.9);
 }
 
+.img-wrapper {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+}
+
+.ai-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(4rem, 15vw, 100rem);
+    font-weight: 1000;
+    color: white;
+    opacity: 0.2;
+    background: none;
+    pointer-events: none; 
+    user-select: none;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
 @media (max-width: 359px) {
     .grid { column-count: 1; }
     body { margin: 0.5rem; }
