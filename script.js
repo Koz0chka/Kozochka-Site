@@ -159,7 +159,7 @@ async function loadGalleryData() {
 }
 
 function openModal(src, alt) {
-    modal.style.display = "block";
+    modal.style.display = "flex";
     loading.style.display = "block";
     modalImg.style.display = "none";
     modalCaption.textContent = `Загрузка...`;
@@ -259,7 +259,7 @@ nextBtn.addEventListener('click', function(event) {
 });
 
 document.addEventListener('keydown', function(event) {
-    if (modal.style.display === "block") {
+    if (modal.style.display === "flex") {
         switch(event.key) {
             case 'Escape':
                 closeModal();
