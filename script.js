@@ -11,6 +11,13 @@ let currentIndex = 0;
 let imageData = [];
 let currentFilter = 'all';
 
+function getWebPPath(originalPath) {
+    if (!originalPath) return '';
+    return originalPath
+        .replace('/full/', '/webp/')
+        .replace(/\.(jpg|jpeg|png|gif)$/i, '.webp');
+}
+
 function renderFilters() {
     const filtersContainer = document.getElementById('filters');
     filtersContainer.innerHTML = '';
@@ -103,7 +110,7 @@ function renderGallery() {
             imgWrapper.className = 'img-wrapper';
 
             const img = document.createElement('img');
-            img.src = imgData.image;
+            img.src = getWebPPath(imgData.image); 
             img.alt = imgData.alt;
             img.dataset.index = imgData.originalIndex;
 
@@ -117,7 +124,7 @@ function renderGallery() {
 
             img.addEventListener('click', function() {
                 currentIndex = parseInt(this.dataset.index);
-                openModal(this.src, imgData.alt);
+                openModal(getWebPPath(imgData.image), imgData.alt);
             });
 
             imgWrapper.appendChild(img);
