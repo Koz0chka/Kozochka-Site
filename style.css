@@ -68,6 +68,11 @@ h1 {
     object-fit: cover;
     transition: transform 0.3s ease;
     cursor: pointer;
+    opacity: 0;
+}
+
+.panel img.loaded {
+    opacity: 1;
 }
 
 a {
@@ -224,6 +229,10 @@ a:hover {
     width: 100%;
     line-height: 0;
     container-type: inline-size;
+
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    min-height: 150px;
 }
 
 .ai-badge {

@@ -55,13 +55,13 @@ async function loadGalleryData() {
     try {
         const response = await fetch('data.json');
         if (!response.ok) {
-            throw new Error('Ошибка загрузки данных');
+            throw new Error('Error loading data');
         }
         imageData = await response.json();
         renderGallery();
     } catch (error) {
-        console.error('Ошибка:', error);
-        gallery.innerHTML = '<p class="error">Ошибка загрузки галереи</p>';
+        console.error('Error:', error);
+        gallery.innerHTML = '<p class="error">Error loading gallery</p>';
     }
 }
 
@@ -107,6 +107,14 @@ function renderGallery() {
             img.alt = imgData.alt;
             img.dataset.index = imgData.originalIndex;
 
+            img.loading = 'lazy';
+            img.decoding = 'async';
+
+            img.onload = function() {
+                this.classList.add('loaded');
+                this.parentElement.style.minHeight = '0';
+            };
+
             img.addEventListener('click', function() {
                 currentIndex = parseInt(this.dataset.index);
                 openModal(this.src, imgData.alt);
@@ -147,14 +155,14 @@ function renderGallery() {
 async function loadGalleryData() {
     try {
         const response = await fetch('data.json');
-        if (!response.ok) throw new Error('Ошибка загрузки данных');
+        if (!response.ok) throw new Error('Error loading data');
         imageData = await response.json();
         
         renderFilters();
         renderGallery();
     } catch (error) {
-        console.error('Ошибка:', error);
-        gallery.innerHTML = '<p class="error">Ошибка загрузки галереи</p>';
+        console.error('Error:', error);
+        gallery.innerHTML = '<p class="error">Error loading gallery</p>';
     }
 }
 
@@ -162,7 +170,7 @@ function openModal(src, alt) {
     modal.style.display = "flex";
     loading.style.display = "block";
     modalImg.style.display = "none";
-    modalCaption.textContent = `Загрузка...`;
+    modalCaption.textContent = `Loading...`;
     
     const img = new Image();
     img.onload = function() {
@@ -172,7 +180,7 @@ function openModal(src, alt) {
         updateCaption();
     };
     img.onerror = function() {
-        loading.textContent = "Ошибка загрузки изображения";
+        loading.textContent = "Error loading image";
     };
     img.src = src;
 }
@@ -213,7 +221,7 @@ function showNextImage() {
         updateCaption();
     };
     img.onerror = function() {
-        loading.textContent = "Ошибка загрузки изображения";
+        loading.textContent = "Error loading image";
     };
     img.src = nextImage.image;
 }
@@ -233,7 +241,7 @@ function showPrevImage() {
         updateCaption();
     };
     img.onerror = function() {
-        loading.textContent = "Ошибка загрузки изображения";
+        loading.textContent = "Error loading image";
     };
     img.src = prevImage.image;
 }
