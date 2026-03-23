@@ -124,7 +124,8 @@ function renderGallery() {
 
             img.addEventListener('click', function() {
                 currentIndex = parseInt(this.dataset.index);
-                openModal(getWebPPath(imgData.image), imgData.alt);
+                // openModal(getWebPPath(imgData.image), imgData.alt);
+                openModal(imgData.image, imgData.alt); 
             });
 
             imgWrapper.appendChild(img);
